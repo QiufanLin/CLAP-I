@@ -88,4 +88,4 @@ The code is tested using:
 ** Example of using a dropout rate of 0.5:
 > python CLAP_scl_baseline.py --ne=1 --survey=1 --net=1 --size_latent_main=16 --batch_train=64 --texp=0 --rate_dropout=0.5 --phase=0
 
-- For all these methods, rerun "CLAP_scl_baseline.py" by setting "--phase=1" and produce inference results (saved in output .npz files).
+- For all these methods, after training, rerun "CLAP_scl_baseline.py" by setting "--phase=1" to produce inference results (saved in output .npz files).
