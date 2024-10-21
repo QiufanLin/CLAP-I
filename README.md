@@ -24,29 +24,29 @@ The code is tested using:
 
 - Set "--texp=1" for supervised contrastive learning; "--phase=0" for training a SCL model from scratch; "--net=1" for using the inception net from Treyer et al. (2024); "--survey=1" for using the SDSS dataset; "--survey=2" for using the CFHTLS dataset; "--survey=3" for using the KiDS dataset (including the VIKING NIR magnitudes). The argument "size_latent_main" specifies the number of dimensions of the latent vector that encodes redshift information (default: 16). The argument "size_latent_ext" specifies the number of dimensions of the latent vector that encodes other information (default: 512). The argument "coeff_recon" specifies the coefficient/weight of the image reconstruction loss term (default: 100 for SDSS and KiDS; 1 for CFHTLS). The argument "batch_train" specifies the size of a mini-batch in training (default: 64). Train individual models by setting "--ne=1", "--ne=2", …, "--ne=10" (10 realizations in an ensemble). 
 
-* Example with SDSS:
+** Example with SDSS:
 > python CLAP_scl_baseline.py --ne=1 --survey=1 --net=1 --size_latent_main=16 --size_latent_ext=512 --coeff_recon=100 --batch_train=64 --texp=1 --phase=0
 
-* Example with CFHTLS:
+** Example with CFHTLS:
 > python CLAP_scl_baseline.py --ne=1 --survey=2 --net=1 --size_latent_main=16 --size_latent_ext=512 --coeff_recon=1 --batch_train=64 --texp=1 --phase=0
 
-* Example with KiDS:
+** Example with KiDS:
 > python CLAP_scl_baseline.py --ne=1 --survey=3 --net=1 --size_latent_main=16 --size_latent_ext=512 --coeff_recon=100 --batch_train=64 --texp=1 --phase=0
 
 - After training, rerun "CLAP_scl_baseline.py" by setting "--phase=1" for restoring the trained SCL model and producing inference results (saved in an output .npz file).
 
-* Example with SDSS:
+** Example with SDSS:
 > python CLAP_scl_baseline.py --ne=1 --survey=1 --net=1 --size_latent_main=16 --size_latent_ext=512 --coeff_recon=100 --batch_train=64 --texp=1 --phase=1
 
 ## Adaptive KNN & Recalibration
 
-- Apply adaptive KNN and recalibration by running "CLAP_knn_recalibration.py", producing raw probability density estimates (saved in an output file named "***_zprob_raw_***.npy").
+- Apply adaptive KNN and recalibration by running "CLAP_knn_recalibration.py", producing raw probability density estimates (saved in an output file named "**_zprob_raw_**.npy").
 
 - The user-defined catalogs and the output .npz files from SCL are required.
  
 - The arguments "ne" and "survey" are the same as in SCL, corresponding to certain SCL models/realizations. That is, before setting "--survey=1" and "--ne=1" for KNN, make sure an .npz file has been produced by SCL with "--survey=1" and "--ne=1". The argument "recali_op" specifies whether and how to apply recalibration after KNN (0: no recalibration; 1: only using the training sample for recalibration (default for KiDS); 2: using both the training and the validation samples for recalibration (default for SDSS and CFHTLS)).
 
-* Example with SDSS:
+** Example with SDSS:
 > python CLAP_knn_recalibration.py --ne=1 --survey=1 --recali_op=2
 
 ## Refitting
@@ -57,7 +57,7 @@ The code is tested using:
 
 - The arguments "ne", "survey" and "recali_op" are the same as in the previous procedures.
 
-* Example with SDSS:
+** Example with SDSS:
 > python CLAP_refitting.py --ne=1 --survey=1 --recali_op=2
 
 ## Producing final results
@@ -68,7 +68,7 @@ The code is tested using:
 
 - The arguments "survey" and "recali_op" are the same as in the previous procedures. All realizations whose "ne" is specified in "CLAP_res_collect.py" are collected.
 
-* Example with SDSS:
+** Example with SDSS:
 > python CLAP_res_collect.py --survey=1 --recali_op=2
 
 ## Baseline methods
@@ -79,13 +79,13 @@ The code is tested using:
 
 - The user-defined catalogs and multi-band cutout images are required.
 
-* Example of vanilla CNN (end-to-end, softmax output, no dropout) with SDSS:
+** Example of vanilla CNN (end-to-end, softmax output, no dropout) with SDSS:
 > python CLAP_scl_baseline.py --ne=1 --survey=1 --net=1 --size_latent_main=16 --batch_train=64 --texp=0 --phase=0
 
-* Example of using 5 Gaussian mixture components:
+** Example of using 5 Gaussian mixture components:
 > python CLAP_scl_baseline.py --ne=1 --survey=1 --net=1 --size_latent_main=16 --batch_train=64 --texp=0 --num_gmm=5 --phase=0
 
-* Example of using a dropout rate of 0.5:
+** Example of using a dropout rate of 0.5:
 > python CLAP_scl_baseline.py --ne=1 --survey=1 --net=1 --size_latent_main=16 --batch_train=64 --texp=0 --rate_dropout=0.5 --phase=0
 
 - For all these methods, rerun "CLAP_scl_baseline.py" by setting "--phase=1" and produce inference results (saved in output .npz files).
