@@ -4,7 +4,7 @@ We present "the **C**ontrastive **L**earning and **A**daptive KNN for **P**hotom
 
 CLAP has been tested using data from three surveys: the Sloan Digital Sky Survey (SDSS), the Canada-France-Hawaii Telescope Legacy Survey (CFHTLS) and the Kilo-Degree Survey (KiDS).
 
-A CLAP model is developed via a few procedures: supervised contrastive learning (SCL), adaptive KNN, recalibration and refitting. Finally, in order to reduce epistemic uncertainties, we combine probability density estimates from an ensemble of individual CLAP models/realizations via the harmonic mean. These procedures have to be run consecutively (detailed below).
+A CLAP model is developed via a few procedures: supervised contrastive learning (SCL), adaptive KNN, recalibration and refitting. In order to reduce epistemic uncertainties, we combine probability density estimates from an ensemble of individual CLAP models/realizations via the harmonic mean. These procedures have to be run consecutively (detailed below).
 
 The CLAP paper is available at .
 
