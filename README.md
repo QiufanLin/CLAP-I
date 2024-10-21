@@ -1,6 +1,6 @@
 # CLAP. I. Resolving miscalibration for deep learning-based galaxy photometric redshift estimation
 
-We present "the *C*ontrastive *L*earning and *A*daptive KNN for *P*hotometric Redshift (CLAP)", a novel method for obtaining well-calibrated galaxy photometric redshift (photo-z) probability density estimates. It empowers state-of-the-art image-based deep learning methods with the advantages of k-nearest neighbors (KNN), featured by high accuracy, high computational efficiency and a substantial improvement on the calibration of probability density estimates over conventional methods. This is the first paper in the CLAP series.
+We present "the **C**ontrastive **L**earning and **A**daptive KNN for **P**hotometric Redshift (CLAP)", a novel method for obtaining well-calibrated galaxy photometric redshift (photo-z) probability density estimates. It empowers state-of-the-art image-based deep learning methods with the advantages of k-nearest neighbors (KNN), featured by high accuracy, high computational efficiency and a substantial improvement on the calibration of probability density estimates over conventional methods. This is the first paper in the CLAP series.
 
 CLAP has been tested using data from three surveys: the Sloan Digital Sky Survey (SDSS), the Canada-France-Hawaii Telescope Legacy Survey (CFHTLS) and the Kilo-Degree Survey (KiDS).
 
