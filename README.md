@@ -44,7 +44,7 @@ The code is tested using:
 
 - The user-defined catalogs and the output .npz files from SCL are required.
  
-- The arguments "ne" and "survey" are the same as in SCL, corresponding to certain SCL models/realizations. That is, before setting "--survey=1" and "--ne=1" for KNN, make sure an .npz file has been produced by SCL with "--survey=1" and "--ne=1". The argument "recali_op" specifies whether and how to apply recalibration after KNN (0: no recalibration; 1: only using the training sample for recalibration (default for KiDS); 2: using both the training and the validation samples for recalibration (default for SDSS and CFHTLS)).
+- The arguments "ne" and "survey" are the same as in SCL, corresponding to certain SCL models/realizations. That is, before setting "--survey=1" and "--ne=1" for "CLAP_knn_recalibration.py", make sure an .npz file has been produced by SCL with "--survey=1" and "--ne=1". The argument "recali_op" specifies whether and how to apply recalibration after KNN (0: no recalibration; 1: only using the training sample for recalibration (default for KiDS); 2: using both the training and the validation samples for recalibration (default for SDSS and CFHTLS)).
 
 ** Example with SDSS:
 > python CLAP_knn_recalibration.py --ne=1 --survey=1 --recali_op=2
