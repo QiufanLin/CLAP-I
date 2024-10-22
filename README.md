@@ -62,7 +62,7 @@ The code is tested using:
 
 ## Producing final results
 
-- Run "CLAP_res_collect.py" to collect and combine the probability density estimates produced by multiple realizations from the previous procedures, including the estimates from both SCL and refitting. The photo-z point estimates and summary statistics are also computed. The estimates from refitting are smoothed by a Gaussian filter before being collected. The results from individual realizations and those produced by combination via arithmetic mean and harmonic mean are all provided. The results produced by combining the smoothed refit probability density estimates via harmonic mean are regarded as the final results from the default implementation of CLAP.
+- Run "CLAP_res_collect.py" to collect and combine the probability density estimates produced by multiple realizations from the previous procedures, including both SCL and refitting. The photo-z point estimates and summary statistics are also computed. The probability density estimates from refitting are smoothed by a Gaussian filter before being collected. The results from individual realizations and those produced by combination via the arithmetic mean and the harmonic mean are all provided, while those produced by combining the smoothed refit probability density estimates via the harmonic mean are regarded as the final results from the default implementation of CLAP.
 
 - The user-defined catalogs, the output .npz files from SCL, and the output .npz files (containing refit probability density estimates) from refitting are required.
 
