@@ -75,7 +75,7 @@ The code is tested using:
 
 - For comparison with CLAP, run "CLAP_scl_baseline.py" to produce baseline (end-to-end) models.
 
-- Set "--texp=0" for training an end-to-end model. The argument "num_gmm" specifies the number of Gaussian mixture components in the density output (using the softmax output by setting "--num_gmm=0”). The argument "rate_dropout" specifies the dropout rate used in the dropout layers (not using dropout by setting "--rate_dropout=0”). The arguments "size_latent_ext" and "coeff_recon" now have no impact.
+- Set "--texp=0" for training an end-to-end model. The argument "num_gmm" specifies the number of Gaussian mixture components in the density output (using the softmax output by setting "--num_gmm=0"). The argument "rate_dropout" specifies the dropout rate used in the dropout layers (not using dropout by setting "--rate_dropout=0"). The arguments "size_latent_ext" and "coeff_recon" now have no impact.
 
 - The user-defined catalogs and multi-band cutout images are required.
 
