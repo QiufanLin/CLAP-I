@@ -208,8 +208,12 @@ class Model:
                         
             if self.rate_dropout > 0:
                 fc0 = tf.nn.dropout(fc0, rate = self.rate_dropout)
-            fc1 = fully_connected(input=fc0, num_outputs=self.size_latent_main + self.size_latent_ext, name='fc1', act=None)                    
-            return fc1
+            fc1a = fully_connected(input=fc0, num_outputs=self.size_latent_main, name='fc1a', act=None)                    
+            if self.size_latent_ext == 0:
+                return fc1a
+            else:
+                fc1b = fully_connected(input=fc0, num_outputs=self.size_latent_ext, name='fc1b', act=None)                    
+                return tf.concat([fc1a, fc1b], 1)
                 
 
     def decoder(self, latent, name, reuse):        
