@@ -338,10 +338,10 @@ if phase == 0:
 
 if phase == 1:  # not use dropout
     if rate_dropout == 0: 
-        cost_zp_q, latent_q, zprob_q, zphoto_mean, zphoto_max, zphoto_median = getdata.get_cost_z_stats([], session, x, y, inputadd, x2, y2, inputadd2, p_set, cost_zp_set, latent_set)
+        cost_zp_q, latent_q, zprob_q, zphoto_mean, zphoto_mode, zphoto_median = getdata.get_cost_z_stats([], session, x, y, inputadd, x2, y2, inputadd2, p_set, cost_zp_set, latent_set)
     else:  # use dropout
-        cost_zp_q, latent_q, zprob_q, zphoto_mean, zphoto_max, zphoto_median = getdata.get_cost_z_stats_dropout(session, x, y, inputadd, x2, y2, inputadd2, p_set, cost_zp_set, latent_set)
+        cost_zp_q, latent_q, zprob_q, zphoto_mean, zphoto_mode, zphoto_median = getdata.get_cost_z_stats_dropout(session, x, y, inputadd, x2, y2, inputadd2, p_set, cost_zp_set, latent_set)
    
     np.savez(output_savepath, n_train=n_train, n_test=n_test, n_val=n_val, id_train=id_train, id_test=id_test, id_validation=id_validation,
-             zphoto_mean=zphoto_mean, zphoto_max=zphoto_max, zphoto_median=zphoto_median, cost_zp=cost_zp_q, latent=latent_q, zprob=zprob_q)
+             zphoto_mean=zphoto_mean, zphoto_mode=zphoto_mode, zphoto_median=zphoto_median, cost_zp=cost_zp_q, latent=latent_q, zprob=zprob_q)
 print (fx)

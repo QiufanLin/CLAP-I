@@ -122,14 +122,14 @@ def get_z_stats(zphoto_q, zspec_q):
 def get_z_point_estimates(zlist, zprob_q, N_sample):
     zphoto_mean = np.sum(zprob_q * np.expand_dims(zlist, 0), 1)
 
-    zphoto_max = np.zeros(N_sample)
+    zphoto_mode = np.zeros(N_sample)
     for i in range(N_sample):
-        zphoto_max[i] = zlist[np.argmax(zprob_q[i])]
+        zphoto_mode[i] = zlist[np.argmax(zprob_q[i])]
 
     zphoto_median = np.zeros(N_sample)
     for i in range(N_sample):
         zphoto_median[i] = zlist[np.argmin(abs(np.cumsum(zprob_q[i]) - 0.5))]
-    return zphoto_mean, zphoto_max, zphoto_median
+    return zphoto_mean, zphoto_mode, zphoto_median
 
 
 def get_moments(zlist, zprob_q):
@@ -183,7 +183,7 @@ resne_collect = {}
 # results from refitting
 resne_collect['zphoto_prob_density_refit'] = np.zeros((n_nelist+2, n_test, bins))  # photo-z probability density
 resne_collect['zphoto_mean_refit'] = np.zeros((n_nelist+2, n_test))  # the probability-weighted mean redshift
-resne_collect['zphoto_max_refit'] = np.zeros((n_nelist+2, n_test))  # the redshift at the peak probability
+resne_collect['zphoto_mode_refit'] = np.zeros((n_nelist+2, n_test))  # the redshift at the peak probability
 resne_collect['zphoto_median_refit'] = np.zeros((n_nelist+2, n_test))  # the median redshift at which the cumulative probability is 0.5
 resne_collect['pit_refit'] = np.zeros((n_nelist+2, n_test))  # probability integral transform
 resne_collect['wasser_refit'] = np.zeros((n_nelist+2, n_test))  # 1-Wasserstein distance
@@ -198,7 +198,7 @@ zprob_set_refit = np.zeros((n_nelist, n_test, bins))  # tentative placeholder fo
 # results from supervised contrastive learning
 resne_collect['zphoto_prob_density_scl'] = np.zeros((n_nelist+2, n_test, bins))
 resne_collect['zphoto_mean_scl'] = np.zeros((n_nelist+2, n_test))
-resne_collect['zphoto_max_scl'] = np.zeros((n_nelist+2, n_test))
+resne_collect['zphoto_mode_scl'] = np.zeros((n_nelist+2, n_test))
 resne_collect['zphoto_median_scl'] = np.zeros((n_nelist+2, n_test))
 resne_collect['pit_scl'] = np.zeros((n_nelist+2, n_test))
 resne_collect['wasser_scl'] = np.zeros((n_nelist+2, n_test))
@@ -254,10 +254,10 @@ for j in range(n_nelist+2):
         zprob_test_scl = get_mean_harmonic(zprob_set_scl)
         
             
-    zphoto_mean, zphoto_max, zphoto_median = get_z_point_estimates(zlist, zprob_test_refit, n_test)
+    zphoto_mean, zphoto_mode, zphoto_median = get_z_point_estimates(zlist, zprob_test_refit, n_test)
     std, skewness, kurtosis = get_moments(zlist, zprob_test_refit)
     resne_collect['zphoto_mean_refit'][j] = zphoto_mean
-    resne_collect['zphoto_max_refit'][j] = zphoto_max
+    resne_collect['zphoto_mode_refit'][j] = zphoto_mode
     resne_collect['zphoto_median_refit'][j] = zphoto_median
     resne_collect['pit_refit'][j] = get_pit_indiv(zprob_test_refit, y_test_cdf, y_test)
     resne_collect['wasser_refit'][j] = get_wasser_indiv(wbin, zprob_test_refit, y_test_cdf)
@@ -271,10 +271,10 @@ for j in range(n_nelist+2):
     residual, sigma_mad, eta = get_z_stats(zphoto_mean, zspec_test)
     print ('test statistics (refit):', residual, sigma_mad, eta)
     
-    zphoto_mean, zphoto_max, zphoto_median = get_z_point_estimates(zlist, zprob_test_scl, n_test)
+    zphoto_mean, zphoto_mode, zphoto_median = get_z_point_estimates(zlist, zprob_test_scl, n_test)
     std, skewness, kurtosis = get_moments(zlist, zprob_test_scl)
     resne_collect['zphoto_mean_scl'][j] = zphoto_mean
-    resne_collect['zphoto_max_scl'][j] = zphoto_max
+    resne_collect['zphoto_mode_scl'][j] = zphoto_mode
     resne_collect['zphoto_median_scl'][j] = zphoto_median
     resne_collect['pit_scl'][j] = get_pit_indiv(zprob_test_scl, y_test_cdf, y_test)
     resne_collect['wasser_scl'][j] = get_wasser_indiv(wbin, zprob_test_scl, y_test_cdf)

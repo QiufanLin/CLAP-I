@@ -107,14 +107,14 @@ class GetData:
     def get_z_point_estimates(self, zlist, zprob_q, N_sample):
         zphoto_mean = np.sum(zprob_q * np.expand_dims(zlist, 0), 1)
 
-        zphoto_max = np.zeros(N_sample)
+        zphoto_mode = np.zeros(N_sample)
         for i in range(N_sample):
-            zphoto_max[i] = zlist[np.argmax(zprob_q[i])]
+            zphoto_mode[i] = zlist[np.argmax(zprob_q[i])]
 
         zphoto_median = np.zeros(N_sample)
         for i in range(N_sample):
             zphoto_median[i] = zlist[np.argmin(abs(np.cumsum(zprob_q[i]) - 0.5))]
-        return zphoto_mean, zphoto_max, zphoto_median
+        return zphoto_mean, zphoto_mode, zphoto_median
                 
 
     def get_batch_data(self, id_):
@@ -188,14 +188,14 @@ class GetData:
             return cost_zp_q, residual, sigma_mad, eta, crps
         elif self.phase == 1:
             zphoto_mean = np.zeros((N_set, N_sample))
-            zphoto_max = np.zeros((N_set, N_sample))
+            zphoto_mode = np.zeros((N_set, N_sample))
             zphoto_median = np.zeros((N_set, N_sample))
             for j in range(N_set):
-                zphoto_mean_j, zphoto_max_j, zphoto_median_j = self.get_z_point_estimates(zlist, zprob_q[j], N_sample)
+                zphoto_mean_j, zphoto_mode_j, zphoto_median_j = self.get_z_point_estimates(zlist, zprob_q[j], N_sample)
                 zphoto_mean[j] = zphoto_mean_j
-                zphoto_max[j] = zphoto_max_j
+                zphoto_mode[j] = zphoto_mode_j
                 zphoto_median[j] = zphoto_median_j
-            return cost_zp_q, latent_q, zprob_q[0], zphoto_mean, zphoto_max, zphoto_median
+            return cost_zp_q, latent_q, zprob_q[0], zphoto_mean, zphoto_mode, zphoto_median
 
 
     def get_mean_harmonic(self, p_set):
@@ -235,8 +235,8 @@ class GetData:
         cost_zp_q = cost_zp_q / N_sample / self.nsample_dropout
                                                 
         zlist = (0.5 + np.arange(self.bins)) * self.wbin + self.z_min
-        zphoto_mean, zphoto_max, zphoto_median = self.get_z_point_estimates(zlist, zprob_q, N_sample)   
-        return cost_zp_q, latent_q, zprob_q, zphoto_mean, zphoto_max, zphoto_median
+        zphoto_mean, zphoto_mode, zphoto_median = self.get_z_point_estimates(zlist, zprob_q, N_sample)   
+        return cost_zp_q, latent_q, zprob_q, zphoto_mean, zphoto_mode, zphoto_median
 
  
     def get_id_nonoverlap(self, id_all, id_pre, subbatch):

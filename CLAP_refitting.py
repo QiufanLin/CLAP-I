@@ -263,14 +263,14 @@ def get_z_stats(zphoto_q, zspec_q):
 def get_z_point_estimates(zlist, zprob_q, N_sample):
     zphoto_mean = np.sum(zprob_q * np.expand_dims(zlist, 0), 1)
 
-    zphoto_max = np.zeros(N_sample)
+    zphoto_mode = np.zeros(N_sample)
     for i in range(N_sample):
-        zphoto_max[i] = zlist[np.argmax(zprob_q[i])]
+        zphoto_mode[i] = zlist[np.argmax(zprob_q[i])]
 
     zphoto_median = np.zeros(N_sample)
     for i in range(N_sample):
         zphoto_median[i] = zlist[np.argmin(abs(np.cumsum(zprob_q[i]) - 0.5))]
-    return zphoto_mean, zphoto_max, zphoto_median      
+    return zphoto_mean, zphoto_mode, zphoto_median      
 
 
 def get_cost_z_stats(data_q, session, x, y, pred, output_z_prob_stats=False):
@@ -291,10 +291,10 @@ def get_cost_z_stats(data_q, session, x, y, pred, output_z_prob_stats=False):
         cost_q = cost_q + cost_q_i * len(index_i)
     cost_q = cost_q / N_sample
     
-    zphoto_mean, zphoto_max, zphoto_median = get_z_point_estimates(zlist, zprob_q, N_sample)
+    zphoto_mean, zphoto_mode, zphoto_median = get_z_point_estimates(zlist, zprob_q, N_sample)
     residual, sigma_mad, eta = get_z_stats(zphoto_mean, zspec_q)                      
     if output_z_prob_stats:
-        return cost_q, zprob_q, zphoto_mean, zphoto_max, zphoto_median, residual, sigma_mad, eta
+        return cost_q, zprob_q, zphoto_mean, zphoto_mode, zphoto_median, residual, sigma_mad, eta
     else:
         return cost_q, residual, sigma_mad, eta
 
@@ -373,8 +373,8 @@ for i in range(iterations):
 ##### Saving #####
 
 
-cost_q, zprob_q, zphoto_mean, zphoto_max, zphoto_median, residual, sigma_mad, eta = get_cost_z_stats([latent_test, zspec_test, zprob_raw_test], session, x, y, [p, cost], output_z_prob_stats=True)
-np.savez(output_savepath, zphoto_mean=zphoto_mean, zphoto_max=zphoto_max, zphoto_median=zphoto_median, cost=cost_q, zprob=zprob_q)
+cost_q, zprob_q, zphoto_mean, zphoto_mode, zphoto_median, residual, sigma_mad, eta = get_cost_z_stats([latent_test, zspec_test, zprob_raw_test], session, x, y, [p, cost], output_z_prob_stats=True)
+np.savez(output_savepath, zphoto_mean=zphoto_mean, zphoto_mode=zphoto_mode, zphoto_median=zphoto_median, cost=cost_q, zprob=zprob_q)
 
 print ('test statistics:', residual, sigma_mad, eta)
 print (fx)
