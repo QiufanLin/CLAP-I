@@ -6,9 +6,9 @@ CLAP has been tested using data from three surveys: the Sloan Digital Sky Survey
 
 A CLAP model is developed via a few procedures: supervised contrastive learning (SCL), adaptive KNN, recalibration and refitting. In order to reduce epistemic uncertainties, we combine probability density estimates from an ensemble of individual CLAP models/realizations via the harmonic mean. These procedures have to be run consecutively (detailed below).
 
-The CLAP paper is available at .
+The CLAP paper is available at http://arxiv.org/abs/2410.19390.
 
-The photo-z catalogs produced by CLAP are available at .
+The photo-z catalogs produced by CLAP are available at https://zenodo.org/records/13954481.
 
 The code is tested using:
 - CPU: Intel(R) Xeon(R) Platinum 8260 CPU @ 2.40GHz
